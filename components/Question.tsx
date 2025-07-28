@@ -1,7 +1,7 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 
 type Option = {
-    text: string
+    text: string | React.JSX.Element
     type: string
 }
 
@@ -27,7 +27,6 @@ export default function Question({
         <form onSubmit={handleSubmit} className='space-y-6'>
             <h2 className='text-2xl font-semibold'>{question}</h2>
             <div className='space-y-2'>
-                <p>sdfg</p>
                 {options.map((opt, i) => (
                     <label key={i} className='block cursor-pointer'>
                         <input
