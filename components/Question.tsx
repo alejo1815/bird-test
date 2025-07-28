@@ -45,7 +45,7 @@ export default function Question({
             </div>
             <button
                 type='submit'
-                className='px-4 py-2 bg-[#FE3416] text-white rounded hover:bg-[#FD5C40] transition disabled:bg-gray-300'
+                className='px-4 py-2 bg-fucsia text-white rounded hover:bg-[#FD5C40] transition disabled:bg-gray-300'
                 disabled={!selected}
             >
                 Submit

@@ -53,6 +53,8 @@ const personalityDescriptions: Record<
 }
 
 export default function Home() {
+    const [started, setStarted] = useState(false)
+
     const [step, setStep] = useState(0)
     const [answers, setAnswers] = useState<string[]>([])
 
@@ -79,6 +81,27 @@ export default function Home() {
     const personality = getPersonality()
     const data = personalityDescriptions[personality]
 
+    if (!started) {
+        return (
+            <div className='h-screen flex flex-col items-center justify-center text-center px-6'>
+                <h1 className='text-3xl font-bold mb-4'>
+                    Bird Personality Test
+                </h1>
+                <p className='text-lg mb-6 max-w-xl text-gray-700'>
+                    You’ll be shown 20 sets of 4 words. In each set, select the
+                    word that best describes you. There are no right or wrong
+                    answers — just be honest!
+                </p>
+                <button
+                    onClick={() => setStarted(true)}
+                    className='bg-fucsia text-white px-6 py-2 rounded shadow hover:bg-pink-700 transition'
+                >
+                    Start Test
+                </button>
+            </div>
+        )
+    }
+
     return (
         <>
             <div className='absolute'>
@@ -91,7 +114,7 @@ export default function Home() {
                 <div className='w-full max-w-xl bg-white p-6 rounded shadow-lg'>
                     <div className='w-full bg-gray-200 rounded h-2 mb-6'>
                         <div
-                            className='bg-[#FE3416] h-2 rounded'
+                            className='bg-fucsia h-2 rounded'
                             style={{
                                 width: `${progress}%`,
                                 transition: 'width 0.3s ease',
