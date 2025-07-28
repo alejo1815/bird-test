@@ -1,103 +1,146 @@
-import Image from "next/image";
+'use client'
+
+import { useState } from 'react'
+import Question from '../components/Question'
+import { questions } from '@/questions'
+import Image from 'next/image'
+
+const personalityDescriptions: Record<
+    string,
+    { title: string; paragraphs: string[]; color: string; image: string }
+> = {
+    Dove: {
+        title: 'You are a Dove – The Nurturer',
+        color: 'darkOrange',
+        image: 'dove',
+        paragraphs: [
+            'Strengths: Empathetic, harmony-driven, supportive, and excellent at building relationships and creating psychological safety.',
+            'Challenges: You may avoid conflict, struggle with setting boundaries, and take criticism personally.',
+            "In Coaching: You're great at building trust but may need to work on assertiveness and holding others accountable.",
+        ],
+    },
+
+    Owl: {
+        title: 'You are an Owl – The Analyst',
+        color: 'purple',
+        image: 'owl',
+        paragraphs: [
+            'Strengths: Detail-oriented, logical, precise, and organized. You thrive in structured environments and solve problems effectively.',
+            'Challenges: You may struggle with perfectionism, over-analysis (which can lead to procrastination), and burnout from needing too much control.',
+            'In Coaching: You excel at data-driven decision-making, but could benefit from being more flexible and trusting others’ approaches.',
+        ],
+    },
+    Peacock: {
+        title: 'You are a Peacock – The Energizer',
+        color: 'fucsia',
+        image: 'peacock',
+        paragraphs: [
+            'Strengths: Charismatic, spontaneous, innovative, and inspiring. You energize and motivate others naturally.',
+            'Challenges: You may be impulsive, leave tasks unfinished, and have difficulty accepting criticism.',
+            "In Coaching: You're great at motivating teams, but may need to improve follow-through and consistency.",
+        ],
+    },
+    Eagle: {
+        title: 'You are an Eagle – The Visionary',
+        color: 'orangeRed',
+        image: 'eagle',
+        paragraphs: [
+            'Strengths: Ambitious, determined, goal-oriented, and resilient. You thrive on challenges and make confident decisions.',
+            'Challenges: You may be impatient, rigid in your approach, and less open to alternative ideas.',
+            'In Coaching: You drive results and accountability, but should work on listening more and encouraging collaboration.',
+        ],
+    },
+}
 
 export default function Home() {
-  return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    const [step, setStep] = useState(0)
+    const [answers, setAnswers] = useState<string[]>([])
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
-  );
+    const handleAnswer = (type: string) => {
+        setAnswers((prev) => [...prev, type])
+        setStep((prev) => prev + 1)
+    }
+
+    const getPersonality = () => {
+        const counts: Record<string, number> = {}
+
+        answers.forEach((type) => {
+            counts[type] = (counts[type] || 0) + 1
+        })
+
+        const sorted = Object.entries(counts).sort((a, b) => b[1] - a[1])
+
+        if (sorted.length === 0) return 'Unknown'
+
+        return sorted[0][0]
+    }
+
+    const progress = (step / questions.length) * 100
+    const personality = getPersonality()
+    const data = personalityDescriptions[personality]
+
+    return (
+        <>
+            <div className='absolute'>
+                <Image src='/logo.png' alt='logo' width={100} height={100} />
+            </div>
+            <main className='min-h-screen flex flex-col items-center justify-center p-4 bg-gray-100'>
+                <h2 className='text-left text-[#220E39] font-black mb-4 '>
+                    Bird Personality Test
+                </h2>
+                <div className='w-full max-w-xl bg-white p-6 rounded shadow-lg'>
+                    <div className='w-full bg-gray-200 rounded h-2 mb-6'>
+                        <div
+                            className='bg-[#FE3416] h-2 rounded'
+                            style={{
+                                width: `${progress}%`,
+                                transition: 'width 0.3s ease',
+                            }}
+                        />
+                    </div>
+
+                    {step < questions.length ? (
+                        <Question
+                            key={step}
+                            question={questions[step].question}
+                            options={questions[step].options}
+                            onSubmit={handleAnswer}
+                        />
+                    ) : (
+                        <div
+                            className={`p-6 rounded-xl shadow-lg bg-white border-t-8 border-${data.color}`}
+                        >
+                            <h2
+                                className={`text-2xl font-bold text-${data.color} mb-4 text-center`}
+                            >
+                                {data.title}
+                            </h2>
+                            <div className='flex items-center justify-center mb-2'>
+                                <Image
+                                    src={`${data.image}.svg`}
+                                    height={50}
+                                    width={50}
+                                    alt='result'
+                                />
+                            </div>
+                            <div className='space-y-3 text-gray-800 text-base leading-relaxed'>
+                                {data.paragraphs.map((p, i) => (
+                                    <p key={i}>{p}</p>
+                                ))}
+                            </div>
+                            <button
+                                onClick={() => {
+                                    setAnswers([])
+                                    setStep(0)
+                                }}
+                                className='mt-6 px-4 py-2 bg-gray-300 text-gray-800 rounded hover:bg-gray-400 transition'
+                            >
+                                Take the test again
+                            </button>
+                        </div>
+                    )}
+                </div>
+            </main>
+        </>
+    )
 }
